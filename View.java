@@ -160,10 +160,9 @@ public class View {
          for (Room e : u.getRooms()) {
             String[] start = (e.getCheckInDate() + "").split("/");
             String[] end = (e.getCheckOutDate() + "").split("/");
-            
-           // if (Integer.parseInt(start[0]) == cal.get(Calendar.MONTH)) {
-            //   if (Integer.parseInt(end[1]) == cal.get(Calendar.DAY_OF_MONTH)) {
 
+            if (Integer.parseInt(start[0]) == cal.get(Calendar.MONTH)+1) {
+               if (Integer.parseInt(start[1]) == cal.get(Calendar.DATE)) {
                   String startDate = e.getCheckInDate();
                   String endDate = e.getCheckOutDate();
                   SimpleDateFormat sdf = new SimpleDateFormat("hh:mmaa");
@@ -172,11 +171,30 @@ public class View {
                   String times = (e.getCheckInDate() + " - " + e.getCheckOutDate());
                   length.setText(times);
 
+                  dayPanel.add(new JLabel(u.getGuest()));
                   dayPanel.add(new JLabel("Room Number: " + e.getRoomNumber()));
                   dayPanel.add(length);
                   dayPanel.add(new JLabel(" "));
-              // }
-         //   }
+
+
+               }
+            }
+            if (Integer.parseInt(end[0]) == cal.get(Calendar.MONTH)+1) {
+               if (Integer.parseInt(end[1]) == cal.get(Calendar.DATE)) {
+                  String startDate = e.getCheckInDate();
+                  String endDate = e.getCheckOutDate();
+                  SimpleDateFormat sdf = new SimpleDateFormat("hh:mmaa");
+
+                  JLabel length = new JLabel();
+                  String times = (e.getCheckInDate() + " - " + e.getCheckOutDate());
+                  length.setText(times);
+
+                  dayPanel.add(new JLabel(u.getGuest()));
+                  dayPanel.add(new JLabel("Room Number: " + e.getRoomNumber()));
+                  dayPanel.add(length);
+                  dayPanel.add(new JLabel(" "));
+               }
+            }
          }
       }
    }
