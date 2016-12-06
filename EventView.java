@@ -17,6 +17,8 @@ public class EventView {
       JFrame frame = new JFrame();
       JPanel panel = new JPanel();
       this.model = model;
+      this.model.setCurrentUser(model.getCurrentUser());
+      
       
       Calendar cal = model.getCal();
 
@@ -25,7 +27,7 @@ public class EventView {
       tempEnd.setTime(cal.getTime());
       tempEnd.add(Calendar.HOUR, 1);
 
-      JTextField eventText = new JTextField("USER ID", 25);
+      JTextField eventText = new JTextField(this.model.getCurrentUser().getGuest(), 25);
       eventText.addMouseListener(new MouseAdapter()
       {
          @Override
@@ -73,7 +75,7 @@ public class EventView {
       saveButton.addActionListener(new ActionListener()  {
 
          public void actionPerformed(ActionEvent e) {
-            String userID = eventText.getText();
+            String userID = model.getCurrentUser().getID();
             int roomNumber = Integer.parseInt(dateText.getText());
             String startDate = beginText.getText();
             String endDate = endText.getText();
@@ -96,9 +98,13 @@ public class EventView {
             
             //Create the rooms from the text file
             if( 0 < roomNumber && roomNumber <= 10)
+            {
                pp = new Luxury(roomNumber, startDate, endDate);
+            }
             if( 10 < roomNumber && roomNumber <= 20)
+            {
                pp = new Economy(roomNumber, startDate, endDate);
+            }
             
             boolean timeConflict = false;
             
@@ -115,10 +121,13 @@ public class EventView {
             }
 
             if (!timeConflict) {
-               user.addRoom(pp);
+               model.getCurrentUser().addRoom(pp);
+               model.getCurrentUser().setPayment(pp.getCost());
                model.addUser(user);
+               
             }
             frame.dispose();
+            frame.repaint();
          }
       });
 

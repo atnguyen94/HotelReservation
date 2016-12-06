@@ -6,11 +6,10 @@ import java.util.Date;
 public class SimpleCalendar {
 
     public static void main(String[] args) throws ParseException {
-       User user = new User("Bob", "bob", 0, false);
         Model model = new Model();
-        View view = new View(model);
-        model.setView(view);
         model.loadEvents();
+        GuestOrManagerView gOrM = new GuestOrManagerView(model);
+
 
         for(User u : model.getUsers())
         {

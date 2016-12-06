@@ -12,16 +12,16 @@ public class View {
    private Calendar cal;
    private JLabel monthLabel = new JLabel();
    private JPanel monthPanel = new JPanel();
-   private JPanel dayPanel = new JPanel();
+   private JTextArea availRooms = new JTextArea();
 
    public View(Model model) {
       this.model = model;
       this.cal = model.getCal();
 
-      JButton createButton = new JButton("Make A Reservation");
+      JButton createButton = new JButton("Load");
       JButton prevButton = new JButton("<");
       JButton nextButton = new JButton(">");
-      JButton quitButton = new JButton("Quit");
+      JButton quitButton = new JButton("Save & Quit");
 
       createButton.setBackground(Color.RED);
       createButton.setForeground(Color.WHITE);
@@ -76,12 +76,12 @@ public class View {
       monthWrap.add(monthPanel);
       drawMonth(monthPanel);
 
-      dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.PAGE_AXIS));
-      dayPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-      paintDay(dayPanel);
+      availRooms.setLayout(new BoxLayout(availRooms, BoxLayout.PAGE_AXIS));
+      availRooms.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+      paintDay(availRooms);
 
       JScrollPane scroll = new JScrollPane();
-      scroll.getViewport().add(dayPanel);
+      scroll.getViewport().add(availRooms);
       scroll.setPreferredSize(new Dimension(200, 200));
       scroll.setVerticalScrollBarPolicy(ScrollPaneLayout.VERTICAL_SCROLLBAR_AS_NEEDED);
 
@@ -102,10 +102,10 @@ public class View {
       monthPanel.revalidate();
       monthPanel.repaint();
 
-      dayPanel.removeAll();
-      paintDay(dayPanel);
-      dayPanel.revalidate();
-      dayPanel.repaint();
+      availRooms.removeAll();
+      paintDay(availRooms);
+      availRooms.revalidate();
+      availRooms.repaint();
    }
 
    private void drawMonth(JPanel monthPanel) {
@@ -152,7 +152,7 @@ public class View {
       }
    }
 
-   private void paintDay(JPanel dayPanel) {
+   private void paintDay(JTextArea availRooms) {
       ArrayList<User> currentEvents = model.getUsers();
 
       for(User u : currentEvents)
@@ -171,10 +171,10 @@ public class View {
                   String times = (e.getCheckInDate() + " - " + e.getCheckOutDate());
                   length.setText(times);
 
-                  dayPanel.add(new JLabel(u.getGuest()));
-                  dayPanel.add(new JLabel("Room Number: " + e.getRoomNumber()));
-                  dayPanel.add(length);
-                  dayPanel.add(new JLabel(" "));
+                  availRooms.add(new JLabel(u.getGuest()));
+                  availRooms.add(new JLabel("Room Number: " + e.getRoomNumber()));
+                  availRooms.add(length);
+                  availRooms.add(new JLabel(" "));
 
 
                }
@@ -189,10 +189,10 @@ public class View {
                   String times = (e.getCheckInDate() + " - " + e.getCheckOutDate());
                   length.setText(times);
 
-                  dayPanel.add(new JLabel(u.getGuest()));
-                  dayPanel.add(new JLabel("Room Number: " + e.getRoomNumber()));
-                  dayPanel.add(length);
-                  dayPanel.add(new JLabel(" "));
+                  availRooms.add(new JLabel(u.getGuest()));
+                  availRooms.add(new JLabel("Room Number: " + e.getRoomNumber()));
+                  availRooms.add(length);
+                  availRooms.add(new JLabel(" "));
                }
             }
          }
