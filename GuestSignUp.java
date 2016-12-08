@@ -65,7 +65,7 @@ public class GuestSignUp extends JFrame {
                   else
                   {
                      System.out.println("XD");
-                     model.addUser(u);
+                     model.addSignUp(u);
                      model.setCurrentUser(u);
                      View view = new View(model);
                      model.setView(view);
@@ -77,7 +77,7 @@ public class GuestSignUp extends JFrame {
             else if(guests.isEmpty())
             {
 
-               model.addUser(u);
+               model.addSignUp(u);
                model.setCurrentUser(u);
                View view = new View(model);
                model.setView(view);

@@ -82,6 +82,11 @@ public class Model implements Serializable {
       view.repaint();
    }
 
+   public void addSignUp(User e)
+   {
+      events.add(e);
+   }
+   
    public void addRoom(Room room)
    {
       currentUser.addRoom(room);
