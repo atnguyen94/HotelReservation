@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class Economy implements Room
+public class Economy implements Room, Serializable
 {
    private int roomNumber;
    private String checkInDate;

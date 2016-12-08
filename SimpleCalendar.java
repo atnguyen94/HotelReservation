@@ -1,13 +1,14 @@
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SimpleCalendar {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, IOException {
         Model model = new Model();
-        model.loadEvents();
+        model.readReservations();
         GuestOrManagerView gOrM = new GuestOrManagerView(model);
 
 

@@ -44,14 +44,7 @@ public class GuestLogin extends JFrame {
          {
             // TODO Auto-generated method stub
             super.mouseClicked(e);
-            try
-            {
-               model.loadEvents();
-            } catch (ParseException e1)
-            {
-               // TODO Auto-generated catch block
-               e1.printStackTrace();
-            }
+
             String name = txuser.getText();
             @SuppressWarnings("deprecation")
             String pw = pass.getText();

@@ -1,8 +1,12 @@
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+
 import javax.swing.border.EmptyBorder;
+
 import java.util.*;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -54,7 +58,8 @@ public class View {
 
          public void actionPerformed(ActionEvent e) {
             try {
-               model.saveUsers();
+               model.writeReservations();
+               System.exit(0);
             } catch (IOException ignored) {}
          }
       });
