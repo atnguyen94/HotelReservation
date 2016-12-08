@@ -79,7 +79,7 @@ public class Model implements Serializable {
 
    public void addUser(User e) {
       events.add(e);
-      //view.repaint();
+      view.repaint();
    }
 
    public void addRoom(Room room)
