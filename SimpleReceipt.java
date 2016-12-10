@@ -1,3 +1,9 @@
+/**
+ * Using the strategy pattern, this class creates a receipt for the most recent
+ * transaction of a user
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.util.ArrayList;
 
 

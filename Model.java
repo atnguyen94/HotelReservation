@@ -1,4 +1,8 @@
-
+/**
+ * This class represents the model of the hotel reservation system.
+ * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 
 import java.io.*;
 import java.text.ParseException;
@@ -138,6 +142,11 @@ public class Model implements Serializable
    }
 
 
+   /**
+    * Get a specific user from the ArrayList of guests
+    * @param name the name of the guests
+    * @return the Guest
+    */
    public Guest locateUser(String name)
    {
       Iterator<Guest> guestIterator = userIterator();
@@ -152,6 +161,12 @@ public class Model implements Serializable
       return null;
    }
 
+   /**
+    * Verity the information of a guest
+    * @param name the name of a guest
+    * @param userID the ID of a guest
+    * @return true is verified, false if not verified
+    */
    public boolean verifyInformation(String name, String userID)
    {
       User user = locateUser(name);
@@ -160,6 +175,12 @@ public class Model implements Serializable
    }
 
 
+   /**
+    * Displays the rooms on the GUI
+    * @param checkIn the check in date
+    * @param checkOut the check out date
+    * @param roomCost the cost of the room
+    */
    public void paintRooms(Calendar checkIn, Calendar checkOut, int roomCost)
    {
       Iterator<Room> roomIterator = roomIterator();
@@ -226,6 +247,10 @@ public class Model implements Serializable
       }
    }
 
+   /**
+    * Saves the user data using serialization
+    * @throws IOException
+    */
    public void saveUsers() throws IOException {
       File file = new File("users.txt");
       SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -246,6 +271,10 @@ public class Model implements Serializable
       }
    }
 
+   /**
+    * Loads the user data using serialization
+    * @throws IOException
+    */
    @SuppressWarnings("unchecked")
    public void loadEvents() throws IOException {
       String fileName = "users.txt";

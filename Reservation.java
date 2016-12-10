@@ -1,3 +1,8 @@
+/**
+ * This class describes a reservation for a room
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;

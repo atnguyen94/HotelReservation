@@ -1,3 +1,8 @@
+/**
+ * This class represents a user for the hotel reservation system
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.io.Serializable;
 import java.util.Date;
 

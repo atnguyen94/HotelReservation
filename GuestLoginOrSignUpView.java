@@ -1,3 +1,7 @@
+/**
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;

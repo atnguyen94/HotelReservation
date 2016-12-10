@@ -1,3 +1,8 @@
+
+/**
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.io.IOException;
 import java.text.ParseException;
 

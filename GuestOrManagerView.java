@@ -12,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * The initial screen where a user indicates whether they are a guest or manager
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
  *
  */
 public class GuestOrManagerView extends JFrame {

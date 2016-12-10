@@ -1,3 +1,8 @@
+/**
+ * This method describes the look and feel of the GUI for a manager
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;

@@ -1,3 +1,8 @@
+/**
+ * This class describes the look and feel of the reservation creation GUI
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
@@ -244,6 +249,9 @@ public class ReservationView {
         }
     }
 
+    /**
+     * This method creates a reservation from GUI input
+     */
     private void makeReservation() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String checkIn = beginText.getText();

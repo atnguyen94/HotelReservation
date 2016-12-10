@@ -1,3 +1,10 @@
+/**
+ * Represents the comprehensive receipt containing all transactions a user
+ * makes.
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ *
+ */
 public class ComprehensiveReceipt implements Receipt
 {
     private Guest user;

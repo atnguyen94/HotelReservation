@@ -1,3 +1,9 @@
+/**
+ * This method describes the main look and feel of the reservation system
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
+
 import java.text.SimpleDateFormat;
 
 import javax.swing.border.EmptyBorder;
