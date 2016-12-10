@@ -1,5 +1,5 @@
 
-public class Receipt
+public interface Receipt
 {
-
+   public double getTotalPrice();
 }
