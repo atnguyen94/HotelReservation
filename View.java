@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.border.EmptyBorder;
@@ -9,71 +8,99 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 
 public class View {
    private Model model;
+   private Guest g;
    private Calendar cal;
+   private JScrollPane scroll;
    private JLabel monthLabel = new JLabel();
    private JPanel monthPanel = new JPanel();
-   private JTextArea availRooms = new JTextArea();
+   private JList<Reservation>  reservationJList = new JList<>();
+   private DefaultListModel<Reservation> listModel = new DefaultListModel<>();
 
-   public View(Model model) {
+   public View(Model model, Guest g) {
       this.model = model;
       this.cal = model.getCal();
 
-      JButton createButton = new JButton("Load");
+      JButton createButton = new JButton("Make Reservations");
       JButton prevButton = new JButton("<");
       JButton nextButton = new JButton(">");
+      JButton viewButton = new JButton("View Reservations");
+      JButton cancelButton = new JButton("Cancel A Reservation");
       JButton quitButton = new JButton("Save & Quit");
 
       createButton.setBackground(Color.RED);
       createButton.setForeground(Color.WHITE);
       prevButton.setBackground(Color.LIGHT_GRAY);
       nextButton.setBackground(Color.LIGHT_GRAY);
+      viewButton.setBackground(Color.GREEN);
+      cancelButton.setBackground(Color.ORANGE);
       quitButton.setBackground(Color.WHITE);
 
       createButton.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e) {
-            new EventView(model, new User());
+            new ReservationView(model, g);
          }
       });
 
       prevButton.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e) {
-            model.prevDay();
+            model.prevMonth();
          }
       });
 
       nextButton.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e) {
-            model.nextDay();
+            model.nextMonth();
          }
       });
 
-      quitButton.addActionListener(new ActionListener() {
+      viewButton.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e) {
-            try {
-               model.writeReservations();
-               System.exit(0);
-            } catch (IOException ignored) {}
+            ArrayList<Reservation> reservations = model.getGuestReservations(g);
+            listModel.removeAllElements();
+
+            for(Reservation r : reservations)
+            {
+               listModel.addElement(r);
+            }
+            reservationJList.setModel(listModel);
          }
       });
 
-      JLabel space = new JLabel();
-      space.setText("         ");
+      cancelButton.addActionListener(new ActionListener() {
 
-      JPanel buttonPanel = new JPanel();
-      buttonPanel.add(createButton);
-      buttonPanel.add(monthLabel);
-      buttonPanel.add(prevButton);
-      buttonPanel.add(nextButton);
-      buttonPanel.add(space);
-      buttonPanel.add(quitButton);
+         public void actionPerformed(ActionEvent e) {
+            Reservation r = reservationJList.getSelectedValue();
+            if(r != null){
+               int index = reservationJList.getSelectedIndex();
+
+               listModel.remove(index);
+               model.cancelReservation(r);
+            }
+         }
+      });
+
+
+      JPanel topButtonPanel = new JPanel();
+      topButtonPanel.add(createButton);
+      topButtonPanel.add(monthLabel);
+      topButtonPanel.add(prevButton);
+      topButtonPanel.add(nextButton);
+      topButtonPanel.add(viewButton);
+      topButtonPanel.add(quitButton);
+
+      JPanel bottomButtonPanel = new JPanel(new BorderLayout());
+      JPanel bottomButtonPanel2 = new JPanel();
+      bottomButtonPanel2.add(cancelButton);
+      bottomButtonPanel.add(bottomButtonPanel2, BorderLayout.WEST);
 
       monthPanel.setLayout(new GridLayout(0, 7, 5, 5));
       monthPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
@@ -81,22 +108,36 @@ public class View {
       monthWrap.add(monthPanel);
       drawMonth(monthPanel);
 
-      availRooms.setLayout(new BoxLayout(availRooms, BoxLayout.PAGE_AXIS));
-      availRooms.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-      paintDay(availRooms);
-
-      JScrollPane scroll = new JScrollPane();
-      scroll.getViewport().add(availRooms);
-      scroll.setPreferredSize(new Dimension(200, 200));
+      scroll = new JScrollPane();
+      scroll.getViewport().add(reservationJList);
+      scroll.setPreferredSize(new Dimension(340, 150));
       scroll.setVerticalScrollBarPolicy(ScrollPaneLayout.VERTICAL_SCROLLBAR_AS_NEEDED);
 
       JFrame frame = new JFrame();
       frame.setTitle("Room Reservation");
-      frame.add(buttonPanel, BorderLayout.NORTH);
+      frame.add(topButtonPanel, BorderLayout.NORTH);
+      frame.add(bottomButtonPanel, BorderLayout.SOUTH);
+
+      quitButton.addActionListener(new ActionListener() {
+
+         public void actionPerformed(ActionEvent e) {
+            try
+            {
+               model.saveUsers();
+            } catch (IOException e1)
+            {
+               // TODO Auto-generated catch block
+               e1.printStackTrace();
+            }
+            model.setCurrentUser(null);
+            frame.dispose();
+         }
+      });
+
       frame.add(monthWrap, BorderLayout.WEST);
       frame.add(scroll, BorderLayout.EAST);
       frame.setResizable(false);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
       frame.pack();
       frame.setVisible(true);
    }
@@ -106,11 +147,6 @@ public class View {
       drawMonth(monthPanel);
       monthPanel.revalidate();
       monthPanel.repaint();
-
-      availRooms.removeAll();
-      paintDay(availRooms);
-      availRooms.revalidate();
-      availRooms.repaint();
    }
 
    private void drawMonth(JPanel monthPanel) {
@@ -153,53 +189,6 @@ public class View {
                day.setBorder(BorderFactory.createLineBorder(Color.RED));
             }
             monthPanel.add(day);
-         }
-      }
-   }
-
-   private void paintDay(JTextArea availRooms) {
-      ArrayList<User> currentEvents = model.getUsers();
-
-      for(User u : currentEvents)
-      {
-         for (Room e : u.getRooms()) {
-            String[] start = (e.getCheckInDate() + "").split("/");
-            String[] end = (e.getCheckOutDate() + "").split("/");
-
-            if (Integer.parseInt(start[0]) == cal.get(Calendar.MONTH)+1) {
-               if (Integer.parseInt(start[1]) == cal.get(Calendar.DATE)) {
-                  String startDate = e.getCheckInDate();
-                  String endDate = e.getCheckOutDate();
-                  SimpleDateFormat sdf = new SimpleDateFormat("hh:mmaa");
-
-                  JLabel length = new JLabel();
-                  String times = (e.getCheckInDate() + " - " + e.getCheckOutDate());
-                  length.setText(times);
-
-                  availRooms.add(new JLabel(u.getGuest()));
-                  availRooms.add(new JLabel("Room Number: " + e.getRoomNumber()));
-                  availRooms.add(length);
-                  availRooms.add(new JLabel(" "));
-
-
-               }
-            }
-            if (Integer.parseInt(end[0]) == cal.get(Calendar.MONTH)+1) {
-               if (Integer.parseInt(end[1]) == cal.get(Calendar.DATE)) {
-                  String startDate = e.getCheckInDate();
-                  String endDate = e.getCheckOutDate();
-                  SimpleDateFormat sdf = new SimpleDateFormat("hh:mmaa");
-
-                  JLabel length = new JLabel();
-                  String times = (e.getCheckInDate() + " - " + e.getCheckOutDate());
-                  length.setText(times);
-
-                  availRooms.add(new JLabel(u.getGuest()));
-                  availRooms.add(new JLabel("Room Number: " + e.getRoomNumber()));
-                  availRooms.add(length);
-                  availRooms.add(new JLabel(" "));
-               }
-            }
          }
       }
    }

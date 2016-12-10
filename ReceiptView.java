@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -46,28 +47,32 @@ public class ReceiptView
             String test = "";
             SimpleReceipt simp = new SimpleReceipt(model.getCurrentUser());
             ReceiptContext r = new ReceiptContext(simp);
-            test += String.format("%10s", model.getCurrentUser().getGuest());
+            test += String.format("%10s", model.getCurrentUser().getName());
             test += String.format("\n\n%10s %22s %28s \n", "ROOM TYPE", "ROOM NUMBER", "PRICE");
             test += String.format("%11s %33s %33s\n\n", "------------------", "-----------------------", "----------");
-
-            if((model.getCurrentUser().getRooms().get(0).getClass()+"").substring(5).equals("Luxury"))
+            ArrayList<Room> rooms = model.getCurrentUser().getRooms();
+            
+            if(!rooms.isEmpty())
             {
-               test += String.format("  %16s %39s %23s%.2f\n", 
-                     (model.getCurrentUser().getRooms().get(0).getClass()+"").substring(5), 
-                     model.getCurrentUser().getRooms().get(0).getRoomNumber(), 
-                     "$",
-                     model.getCurrentUser().getRooms().get(0).getCost()) + "\n";
-            }
-            else
-            {
-               test += String.format("  %10s %41s %23s%.2f\n", 
-                     (model.getCurrentUser().getRooms().get(0).getClass()+"").substring(5), 
-                     model.getCurrentUser().getRooms().get(0).getRoomNumber(), 
-                     "$",
-                     model.getCurrentUser().getRooms().get(0).getCost()) + "\n";
+               if((rooms.get(rooms.size()-1).getCost() == 200))
+               {
+                  test += String.format("  %16s %39s    %23s%d\n",
+                        "Luxury",
+                        model.getCurrentUser().getRooms().get(rooms.size()-1).getRoomNumber(),
+                        "$",
+                        model.getCurrentUser().getRooms().get(rooms.size()-1).getCost()) + "\n";
+               }
+               else
+               {
+                  test += String.format("  %10s %41s    %23s%d\n",
+                        "Economy",
+                        model.getCurrentUser().getRooms().get(rooms.size()-1).getRoomNumber(),
+                        "$",
+                        model.getCurrentUser().getRooms().get(rooms.size()-1).getCost()) + "\n";
+               }
             }
             test += String.format("\n%11s %33s %33s", "------------------", "-----------------------", "----------");
-            test += String.format("\n %s %74s%.2f\n", "TOTAL:", "$", simp.getTotalPrice());
+            test += String.format("\n %s    %74s%d\n", "TOTAL :", "$", simp.getTotalPrice());
             costs.setText(test);
          }
       });
@@ -81,30 +86,30 @@ public class ReceiptView
             String test = "";
             ComprehensiveReceipt simp = new ComprehensiveReceipt(model.getCurrentUser());
             ReceiptContext r = new ReceiptContext(simp);
-            test += String.format("%10s", model.getCurrentUser().getGuest());
+            test += String.format("%10s", model.getCurrentUser().getName());
             test += String.format("\n\n%10s %22s %28s \n", "ROOM TYPE", "ROOM NUMBER", "PRICE");
             test += String.format("%11s %33s %33s\n\n", "------------------", "-----------------------", "----------");
             for(Room x : model.getCurrentUser().getRooms())
             {
-               if((x.getClass()+"").substring(6).equals("Luxury"))
+               if((x.getCost() == 200))
                {
-                  test += String.format("%16s %40s %23s%.2f\n", 
-                        (x.getClass()+"").substring(5), 
-                        x.getRoomNumber(), 
+                  test += String.format("  %16s %39s    %23s%d\n",
+                        "Luxury",
+                        x.getRoomNumber(),
                         "$",
                         x.getCost()) + "\n";
                }
                else
                {
-                  test += String.format("  %10s %41s %23s%.2f\n", 
-                        (x.getClass()+"").substring(5), 
-                        x.getRoomNumber(), 
+                  test += String.format("  %10s %41s    %23s%d\n",
+                        "Economy",
+                        x.getRoomNumber(),
                         "$",
                         x.getCost()) + "\n";
                }
             }
             test += String.format("\n%11s %33s %33s", "------------------", "-----------------------", "----------");
-            test += String.format("\n %s %73s%.2f\n", "TOTAL :", "$", simp.getTotalPrice());
+            test += String.format("\n %s    %74s%d\n", "TOTAL :", "$", simp.getTotalPrice());
             costs.setText(test);
             // String total = String.format("\n  %-10s %48s%d\n", "Total", "$", simpleTotal);
          }
@@ -119,9 +124,7 @@ public class ReceiptView
       frame.setTitle("Conformation Receipt for " /*+ model.getCurrentUser().getGuest()*/);
       frame.add(panel, BorderLayout.NORTH);
       frame.add(scroll, BorderLayout.CENTER);
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       frame.setVisible(true);
    }
 }
-
-

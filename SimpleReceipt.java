@@ -3,22 +3,25 @@ import java.util.ArrayList;
 
 public class SimpleReceipt implements Receipt
 {
-   private User user;
-   private double total;
-   
-   public SimpleReceipt(User user)
-   {
-      this.user = user;
-      total = 0;
-   }
+    private Guest guest;
+    private int total;
 
-   @Override
-   public double getTotalPrice()
-   {
-      // TODO Auto-generated method stub
-      ArrayList<Room> r = user.getRooms();
-      total = r.get(r.size()-1).getCost();
-      return total;
-   }
+    public SimpleReceipt(Guest user)
+    {
+        this.guest = user;
+        total = 0;
+    }
+
+    @Override
+    public int getTotalPrice()
+    {
+        // TODO Auto-generated method stub
+        ArrayList<Room> r = guest.getRooms();
+        if(r.isEmpty())
+           total = 0;
+        else
+           total = r.get(r.size()-1).getCost();
+        return total;
+    }
 
 }

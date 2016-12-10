@@ -1,15 +1,14 @@
-
 public class ReceiptContext
 {
-   private Receipt receipt;
+    private Receipt receipt;
 
-   public ReceiptContext(Receipt r)
-   {
-      this.receipt = r;
-   }
+    public ReceiptContext(Receipt r)
+    {
+        this.receipt = r;
+    }
 
-   public double executeTotalPrice()
-   {
-      return receipt.getTotalPrice();
-   }
+    public double executeTotalPrice()
+    {
+        return receipt.getTotalPrice();
+    }
 }
