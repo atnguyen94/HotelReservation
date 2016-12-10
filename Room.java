@@ -20,6 +20,8 @@ public class Room implements Serializable
         return number;
     }
 
+    
+    
     public int getCost() {return cost;}
 
     public ReservationLists getReservations()
@@ -69,5 +71,10 @@ public class Room implements Serializable
             }
         }
         return true;
+    }
+    
+    public boolean isEmpty()
+    {
+       return !reservations.getReservations().hasNext();
     }
 }

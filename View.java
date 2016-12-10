@@ -65,11 +65,15 @@ public class View {
 
          public void actionPerformed(ActionEvent e) {
             listModel.removeAllElements();
-            System.out.println(model.getCurrentUser().getRooms().isEmpty());
+           
+            ArrayList<Room> r = model.getCurrentUser().getRooms();
             
-            for(Reservation r : model.getGuestReservations(model.getCurrentUser()))
+            for(Room room : r)
             {
-               listModel.addElement(r);
+               ReservationLists res = room.getReservations();
+               Iterator<Reservation> y = res.getUserReservations(model.getCurrentUser().getUserID());
+               while(y.hasNext())
+                  listModel.addElement(y.next());
             }
             reservationJList.setModel(listModel);
          }

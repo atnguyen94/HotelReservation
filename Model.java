@@ -42,6 +42,12 @@ public class Model implements Serializable
       view.repaint();
    }
 
+   
+   public boolean hasNoReservations(int index)
+   {
+      return hotelRoomLayout.get(index).isEmpty();
+   }
+   
    public void prevMonth() {
       cal.add(Calendar.MONTH, -1);
       view.repaint();
@@ -209,7 +215,7 @@ public class Model implements Serializable
 
    public void cancelReservation(Reservation res)
    {
-      Iterator<Room> roomIterator = roomIterator();
+      Iterator<Room> roomIterator = currentUser.getRooms().iterator();
       while(roomIterator.hasNext())
       {
          Room room = roomIterator.next();
