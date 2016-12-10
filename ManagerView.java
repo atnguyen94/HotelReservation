@@ -22,7 +22,7 @@ public class ManagerView {
    private JLabel monthLabel = new JLabel();
    private JPanel monthPanel = new JPanel();
 
-   public ManagerView(Model model) {
+   public ManagerView(final Model model) {
       this.model = model;
       this.cal = model.getCal();
 
@@ -134,7 +134,7 @@ public class ManagerView {
       scroll.setPreferredSize(new Dimension(548, 300));
       scroll.setVerticalScrollBarPolicy(ScrollPaneLayout.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-      JFrame frame = new JFrame();
+      final JFrame frame = new JFrame();
       
       quitButton.addActionListener(new ActionListener() {
 
@@ -176,7 +176,7 @@ public class ManagerView {
 
       String[] days = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
       for (int i = 0; i < days.length; i++) {
-         JLabel day = new JLabel(days[i]);
+         final JLabel day = new JLabel(days[i]);
          day.setForeground(Color.MAGENTA);
          monthPanel.add(day);
       }
@@ -188,11 +188,11 @@ public class ManagerView {
 
       for (int i = 1; i < daysInMonth+startDay; i++) {
          if (i < startDay) {
-            JLabel day = new JLabel("");
+            final JLabel day = new JLabel("");
             monthPanel.add(day);
          } else {
             int dayNumber = i-startDay+1;
-            JLabel day = new JLabel(dayNumber + "");
+            final JLabel day = new JLabel(dayNumber + "");
             day.addMouseListener(new MouseListener() {
 
                public void mouseClicked(MouseEvent e) {

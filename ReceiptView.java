@@ -12,7 +12,7 @@ public class ReceiptView
 {
    private Model model;
 
-   public ReceiptView(Model model)
+   public ReceiptView(final Model model)
    {
       this.model = model;
 
@@ -24,7 +24,7 @@ public class ReceiptView
       /*
        * Describes the look and feel of the receipt
        */
-      JTextArea costs = new JTextArea();
+      final JTextArea costs = new JTextArea();
       JScrollPane scroll = new JScrollPane(costs);
       scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

@@ -19,7 +19,7 @@ public class GuestOrManagerView extends JFrame {
      * Constructs the GUI for Guest or Manager View
      */
 
-    public GuestOrManagerView(Model model)
+    public GuestOrManagerView(final Model model)
     {
         JPanel initial = new JPanel(new GridLayout(0,1,10,10));
         initial.setBorder(new EmptyBorder(20,30,20,30));

@@ -14,12 +14,12 @@ import javax.swing.JTextField;
 @SuppressWarnings("deprecation")
 public class GuestSignUpView extends JFrame {
 
-    public GuestSignUpView(Model model)
+    public GuestSignUpView(final Model model)
     {
         JButton signup = new JButton("Sign Up");
         JPanel panel = new JPanel();
-        JTextField txuser = new JTextField(15);
-        JPasswordField pass = new JPasswordField(15);
+        final JTextField txuser = new JTextField(15);
+        final JPasswordField pass = new JPasswordField(15);
 
         setSize(300,200);
         setLocation(500,280);

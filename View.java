@@ -21,7 +21,7 @@ public class View {
    private JList<Reservation>  reservationJList = new JList<>();
    private DefaultListModel<Reservation> listModel = new DefaultListModel<>();
 
-   public View(Model model, Guest g) {
+   public View(final Model model, final Guest g) {
       this.model = model;
       this.cal = model.getCal();
  
@@ -117,7 +117,7 @@ public class View {
       scroll.setPreferredSize(new Dimension(340, 150));
       scroll.setVerticalScrollBarPolicy(ScrollPaneLayout.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-      JFrame frame = new JFrame();
+      final JFrame frame = new JFrame();
       frame.setTitle("Room Reservation");
       frame.add(topButtonPanel, BorderLayout.NORTH);
       frame.add(bottomButtonPanel, BorderLayout.SOUTH);
@@ -159,7 +159,7 @@ public class View {
 
       String[] days = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
       for (int i = 0; i < days.length; i++) {
-         JLabel day = new JLabel(days[i]);
+         final JLabel day = new JLabel(days[i]);
          day.setForeground(Color.MAGENTA);
          monthPanel.add(day);
       }
@@ -171,11 +171,11 @@ public class View {
 
       for (int i = 1; i < daysInMonth+startDay; i++) {
          if (i < startDay) {
-            JLabel day = new JLabel("");
+            final JLabel day = new JLabel("");
             monthPanel.add(day);
          } else {
             int dayNumber = i-startDay+1;
-            JLabel day = new JLabel(dayNumber + "");
+            final JLabel day = new JLabel(dayNumber + "");
             day.addMouseListener(new MouseListener() {
 
                public void mouseClicked(MouseEvent e) {

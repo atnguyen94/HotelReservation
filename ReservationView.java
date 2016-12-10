@@ -24,13 +24,13 @@ public class ReservationView {
     private Calendar endCal = Calendar.getInstance();
     private int total = 0;
 
-    public ReservationView(Model model, Guest user)  {
-        JFrame frame = new JFrame();
+    public ReservationView(final Model model, Guest user)  {
+        final JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         this.model = model;
         this.model.setCurrentUser(model.getCurrentUser());
 
-        Calendar cal = model.getCal();
+        final Calendar cal = model.getCal();
         SimpleDateFormat time = new SimpleDateFormat("hh:mmaa");
         Calendar tempEnd = new GregorianCalendar();
         tempEnd.setTime(cal.getTime());

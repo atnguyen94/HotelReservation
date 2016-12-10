@@ -14,12 +14,12 @@ import javax.swing.JTextField;
 
 public class GuestLoginView extends JFrame {
 
-    public GuestLoginView(Model model)
+    public GuestLoginView(final Model model)
     {
         JButton signup = new JButton("Login");
         JPanel panel = new JPanel();
-        JTextField txuser = new JTextField(15);
-        JPasswordField pass = new JPasswordField(15);
+        final JTextField txuser = new JTextField(15);
+        final JPasswordField pass = new JPasswordField(15);
 
         setSize(300,200);
         setLocation(500,280);

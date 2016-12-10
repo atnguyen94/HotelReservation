@@ -12,7 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 public class GuestLoginOrSignUpView extends JFrame {
 
-   public GuestLoginOrSignUpView(Model model) throws IOException
+   public GuestLoginOrSignUpView(final Model model) throws IOException
    {
       JPanel initial = new JPanel(new GridLayout(0,1,10,10));
       initial.setBorder(new EmptyBorder(20,30,20,30));

@@ -246,6 +246,7 @@ public class Model implements Serializable
       }
    }
 
+   @SuppressWarnings("unchecked")
    public void loadEvents() throws IOException {
       String fileName = "users.txt";
       File myFile = new File(fileName);
