@@ -32,7 +32,8 @@ public class GuestOrManagerView extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 // TODO Auto-generated method stub
-                //ManagerRoomSelectionView man = new ManagerRoomSelectionView(model);
+                ManagerView man = new ManagerView(model);
+                model.setManagerView(man);
                 //dispose();
             }
         });

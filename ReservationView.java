@@ -36,7 +36,7 @@ public class ReservationView {
         tempEnd.setTime(cal.getTime());
         tempEnd.add(Calendar.HOUR, 1);
 
-        eventText = new JTextField(this.model.getCurrentUser().getName(), 25);
+        eventText = new JTextField(this.model.getCurrentUser().getUserID(), 25);
         eventText.addMouseListener(new MouseAdapter()
         {
             @Override

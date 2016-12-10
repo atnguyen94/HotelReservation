@@ -37,8 +37,8 @@ public class GuestLoginView extends JFrame {
         pass.setBounds(70,70,150,20);
         signup.setBounds(110,100,80,20);
 
-        txuser.setText("temp");
-        pass.setText("temp");
+        txuser.setText("tempuser");
+        pass.setText("temppass");
 
         //create a new user NEED TO DO THIS LOADING FROM FILE
         signup.addMouseListener(new MouseAdapter(){
@@ -47,14 +47,7 @@ public class GuestLoginView extends JFrame {
             {
                 // TODO Auto-generated method stub
                 super.mouseClicked(e);
-                /*try
-                {
-                    model.randomPlaceholder();
-                } catch (ParseException e1)
-                {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }*/
+
                 String name = txuser.getText();
                 @SuppressWarnings("deprecation")
                 String pw = pass.getText();
@@ -65,7 +58,7 @@ public class GuestLoginView extends JFrame {
 
                 if(temp.isEmpty())
                 {
-                    System.out.println("No users detected");
+                    System.out.println("No users detected.");
                     JOptionPane.showMessageDialog(null,
                             "The username and password do not exist.",
                             "Error",
@@ -87,7 +80,7 @@ public class GuestLoginView extends JFrame {
                         }
                         else if(i == temp.size()-1 && found == false)
                         {
-                            System.out.println("User not found in list of users");
+                            System.out.println("User not found in list of users.");
                             JOptionPane.showMessageDialog(null,
                                     "The username and password do not exist.",
                                     "Error",

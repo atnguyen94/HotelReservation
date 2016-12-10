@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ public class Model
     private Guest currentUser;
     private Calendar cal;
     private View view;
+    private ManagerView managerView;
 
     public Model()
     {
@@ -47,6 +50,31 @@ public class Model
         view.repaint();
     }
 
+    public void setManagerDay(int day) {
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        managerView.repaint();
+    }
+
+    public void prevManagerMonth() {
+        cal.add(Calendar.MONTH, -1);
+        managerView.repaint();
+    }
+
+    public void nextManagerMonth() {
+        cal.add(Calendar.MONTH, 1);
+        managerView.repaint();
+    }
+
+    public void prevManageYear() {
+        cal.add(Calendar.YEAR, -1);
+        managerView.repaint();
+    }
+
+    public void nextManagerYear() {
+        cal.add(Calendar.YEAR, 1);
+        managerView.repaint();
+    }
+
     public Calendar getCal() {
         return cal;
     }
@@ -54,6 +82,8 @@ public class Model
     public void setView(View view) {
         this.view = view;
     }
+    ;
+    public void setManagerView(ManagerView managerView) { this.managerView = managerView; }
 
     public Guest getCurrentUser()
     {
@@ -100,24 +130,24 @@ public class Model
     }
 
 
-    public Guest locateUser(String userID)
+    public Guest locateUser(String name)
     {
         Iterator<Guest> guestIterator = userIterator();
 
         while(guestIterator.hasNext())
         {
             Guest guest = guestIterator.next();
-            if(guest.getUserID().equals(userID)){
+            if(guest.getName().equals(name)){
                 return guest;
             }
         }
         return null;
     }
 
-    public boolean verifyInformation(String userID, String name)
+    public boolean verifyInformation(String name, String userID)
     {
-        User user = locateUser(userID);
-        if (user != null) return user.getName().equals(name);
+        User user = locateUser(name);
+        if (user != null) return user.getUserID().equals(userID);
         return false;
     }
 
@@ -187,20 +217,58 @@ public class Model
         }
     }
 
+    public void saveUsers() throws IOException {
+        File file = new File("users.txt");
+        FileWriter fw = new FileWriter(new File("users.txt"));
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        PrintWriter pw = new PrintWriter(file);
+
+        for (Guest g : guests) {
+            for (Room r : g.getRooms()) {
+                ReservationLists reservationLists = r.getReservations();
+                Iterator<Reservation> reservationIterator = reservationLists.getReservations();
+                while(reservationIterator.hasNext()) {
+                    Reservation res = reservationIterator.next();
+                    Date startDate = res.getCheckIn();
+                    Date endDate = res.getCheckOut();
+
+                    String start = sdf.format(startDate);
+                    String end = sdf.format(endDate);
+
+                    pw.print(g.getName() + ", ");
+                    pw.print(g.getUserID() + ", ");
+                    pw.print(start + ", ");
+                    pw.print(end + ", ");
+                    pw.print(r.getRoomNumber() + ", ");
+                    pw.println(r.getCost());
+
+                }
+            }
+        }
+        pw.close();
+    }
+
     public void loadEvents() throws ParseException {
         String sLine;
-        String title;
-        int month;
-        int day;
-        int year;
-        Date d1;
-        Date d2;
-        Calendar c1;
-        Calendar c2;
-        Room e;
-        User us;
+        String name;
+        String id;
+        int roomNumber;
+        int roomCost;
+        Date startDate;
+        Date endDate;
+        Room room;
+        ReservationLists reservationLists = new ReservationLists();
+        Reservation r;
+        Guest g;
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mmaa");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         try {
             Scanner reader = new Scanner(new FileInputStream("users.txt"));
@@ -208,86 +276,27 @@ public class Model
             while (reader.hasNext()) {
                 sLine = reader.nextLine();
                 String[] separated = sLine.split(", ");
-                String[] separated2;
-                String[] separated3;
 
-                if (separated.length == 6) {
-                    //start date
-                    separated2 = separated[2].split("/");
-                    //end date
-                    separated3 = separated[3].split("/");
-                    month = Integer.parseInt(separated2[0]);
-                    day = Integer.parseInt(separated2[1]);
-                    year = Integer.parseInt(separated2[2]);
-                    title = separated[0];
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-                    int num = Integer.parseInt(separated[4]);
-                    Room pp = null;
+                startDate = sdf.parse(separated[2]);
+                endDate = sdf.parse(separated[3]);
+                roomNumber = Integer.parseInt(separated[4]);
+                roomCost = Integer.parseInt(separated[5]);
+                id = separated[1];
+                name = separated[0];
+                g = new Guest(name, id);
 
-                    /*Create the rooms from the text file
-                    if( 0 < num && num <= 10)
-                        pp = new Luxury(num, separated[2], separated[3]);
-                    if( 10 < num && num <= 20)
-                        pp = new Economy(num, separated[2], separated[3]);
+                startCal.setTime(startDate);
+                endCal.setTime(endDate);
 
-                    //create the user from the text file
-                    us = new User(separated[0], separated[1], false);
-
-                    if(events.contains(us))
-                    {
-                        us.addRoom(pp);
-                        us.setPayment(pp.getCost());
-                    }
-                    else
-                    {
-                        us.addRoom(pp);
-                        us.setPayment(pp.getCost());
-                        addUser(us);
-                    }
-                }
-                if(separated.length == 4)
-                {
-               /*
-                *             pw.print(u.getGuest() + ", ");
-            pw.print(u.getID() + ", ");
-            pw.print(u.getPayment());
-            pw.println(u.checkManager());
-
-                    boolean manager;
-                    if(separated[3].equals("True"))
-                        manager = true;
-                    else
-                        manager = false;
-                    us = new User(separated[0], separated[1], manager);
-                    us.setPayment(Double.parseDouble(separated[2]));
-                    for(int i = 0; i < events.size(); i++)
-                    {
-                        if(us.equals(events.get(i)))
-                            break;
-                        else
-                        {
-                            addUser(us);
-                            break;
-                        }
-                    }
-                }
-
-                // d1 = sdf.parse(separated[2]);
-                // d2 = sdf.parse(separated[3]);
-
-            c1 = GregorianCalendar.getInstance();
-            c1.setTime(d1);
-            c1.set(year, month - 1, day);
-
-            c2 = GregorianCalendar.getInstance();
-            c2.setTime(d2);
-            c2.set(year, month - 1, day);*/
-
-
-                }
+                room = new Room(roomNumber, roomCost, reservationLists);
+                r = new Reservation(startCal.getTime(), endCal.getTime(), id, room);
+                addUser(g);
+                setCurrentUser(g);
+                getCurrentUser().addRoom(room);
+                room.addReservation(r);
             }
         } catch (FileNotFoundException error) {
-            System.out.println("This is the first time running, events.txt does not exist!");
+            System.out.println("This is the first time running, users.txt does not exist!");
         }
     }
 }
