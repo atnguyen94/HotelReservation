@@ -64,7 +64,7 @@ public class ReceiptView
                }
                else
                {
-                  test += String.format("  %10s %41s    %23s%d\n",
+                  test += String.format("   %10s %40s   %23s%d\n",
                         "Economy",
                         model.getCurrentUser().getRooms().get(rooms.size()-1).getRoomNumber(),
                         "$",
@@ -101,7 +101,7 @@ public class ReceiptView
                }
                else
                {
-                  test += String.format("  %10s %41s    %23s%d\n",
+                  test += String.format("   %10s %40s   %23s%d\n",
                         "Economy",
                         x.getRoomNumber(),
                         "$",

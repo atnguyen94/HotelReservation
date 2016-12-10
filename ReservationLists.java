@@ -3,9 +3,11 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.io.Serializable;
 
 
-public class ReservationLists
+
+public class ReservationLists implements Serializable
 {
     private ArrayList<Reservation> reservationArrayList;
 
@@ -35,9 +37,27 @@ public class ReservationLists
         return reservationArrayList.iterator();
     }
 
+    public ArrayList<Reservation> getRes()
+    {
+       return reservationArrayList;
+    }
+    
     public void cancelReservation(Reservation res)
     {
         reservationArrayList.remove(res);
+    }
+    
+    public ArrayList<Reservation> getUserRes(Guest g)
+    {
+       ArrayList<Reservation> r = new ArrayList<>();
+       
+       for(Reservation res: reservationArrayList)
+       {
+          if(res.getUserID().equals(g.getUserID()))
+             r.add(res);
+       }
+       
+       return r;
     }
 
     public Iterator<Reservation> getUserReservations(String userID)

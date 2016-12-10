@@ -1,10 +1,15 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import javax.swing.border.EmptyBorder;
+
 import java.util.*;
+
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -39,9 +44,19 @@ public class ManagerView {
         loadButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                try {
-                    model.loadEvents();
-                } catch (ParseException ignored) {}
+             
+                    try
+                  {
+                     model.loadEvents();
+                  } catch (FileNotFoundException e1)
+                  {
+                     // TODO Auto-generated catch block
+                     e1.printStackTrace();
+                  } catch (IOException e1)
+                  {
+                     // TODO Auto-generated catch block
+                     e1.printStackTrace();
+                  }
             }
         });
 
@@ -78,10 +93,16 @@ public class ManagerView {
         quitButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                try {
-                    model.saveUsers();
+
+                    try
+                  {
+                     model.saveUsers();
+                  } catch (IOException e1)
+                  {
+                     // TODO Auto-generated catch block
+                     e1.printStackTrace();
+                  }
                     System.exit(0);
-                } catch (IOException ignored) {}
             }
         });
 
@@ -188,6 +209,7 @@ public class ManagerView {
         t += sdf.format(date.getTime()) + "\n\n";
         ArrayList<Reservation> reservationArrayList = model.getDateReservations(date.getTime());
         t += "Booked Rooms:\n";
+
         for(Reservation r : reservationArrayList)
         {
             t+="Room #" + r.getRoomNumber()

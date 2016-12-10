@@ -24,7 +24,7 @@ public class View {
    public View(Model model, Guest g) {
       this.model = model;
       this.cal = model.getCal();
-
+ 
       JButton createButton = new JButton("Make Reservations");
       JButton prevButton = new JButton("<");
       JButton nextButton = new JButton(">");
@@ -43,7 +43,7 @@ public class View {
       createButton.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e) {
-            new ReservationView(model, g);
+            new ReservationView(model, model.getCurrentUser());
          }
       });
 
@@ -64,10 +64,10 @@ public class View {
       viewButton.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e) {
-            ArrayList<Reservation> reservations = model.getGuestReservations(g);
             listModel.removeAllElements();
-
-            for(Reservation r : reservations)
+            System.out.println(model.getCurrentUser().getRooms().isEmpty());
+            
+            for(Reservation r : model.getGuestReservations(model.getCurrentUser()))
             {
                listModel.addElement(r);
             }

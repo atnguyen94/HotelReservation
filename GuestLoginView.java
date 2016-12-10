@@ -69,6 +69,7 @@ public class GuestLoginView extends JFrame {
                         {
                             System.out.println("User found");
                             model.setCurrentUser(temp.get(i));
+                            model.getGuestReservations(temp.get(i));
                             dispose();
                             View view = new View(model, u);
                             model.setView(view);

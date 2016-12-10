@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Guest extends User {
+public class Guest extends User implements Serializable {
     private ArrayList<Room> roomsReserved;
 
     public Guest(String name, String userID) {

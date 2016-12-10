@@ -259,8 +259,8 @@ public class ReservationView {
             Room room = roomJList.getSelectedValue();
             Reservation r = new Reservation(startCal.getTime(), endCal.getTime(), eventText.getText(), room);
             total += room.getCost();
-            model.getCurrentUser().addRoom(room);
             room.addReservation(r);
+            model.getCurrentUser().addRoom(room);
 
         } catch (ParseException p) {
             p.printStackTrace();
