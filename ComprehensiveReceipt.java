@@ -1,7 +1,14 @@
+/**
+ * Represents the comprehensive receipt containing all transactions a user
+ * makes.
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ *
+ */
 public class ComprehensiveReceipt implements Receipt
 {
     private Guest user;
-    private double total;
+    private int total;
 
     public ComprehensiveReceipt(Guest user)
     {
@@ -10,7 +17,7 @@ public class ComprehensiveReceipt implements Receipt
     }
 
     @Override
-    public double getTotalPrice()
+    public int getTotalPrice()
     {
         // TODO Auto-generated method stub
         for(Room r : user.getRooms())

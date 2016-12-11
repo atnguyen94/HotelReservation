@@ -2,6 +2,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 
 /**
  * The initial screen where a user indicates whether they are a guest or manager
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
  *
  */
 public class GuestOrManagerView extends JFrame {
@@ -18,7 +21,7 @@ public class GuestOrManagerView extends JFrame {
      * Constructs the GUI for Guest or Manager View
      */
 
-    public GuestOrManagerView(Model model)
+    public GuestOrManagerView(final Model model)
     {
         JPanel initial = new JPanel(new GridLayout(0,1,10,10));
         initial.setBorder(new EmptyBorder(20,30,20,30));
@@ -47,7 +50,14 @@ public class GuestOrManagerView extends JFrame {
 
 
             public void actionPerformed(ActionEvent e) {
-                GuestLoginOrSignUpView view = new GuestLoginOrSignUpView(model);
+                try
+               {
+                  GuestLoginOrSignUpView view = new GuestLoginOrSignUpView(model);
+               } catch (IOException e1)
+               {
+                  // TODO Auto-generated catch block
+                  e1.printStackTrace();
+               }
                 //dispose();
 
             }

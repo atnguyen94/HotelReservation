@@ -1,7 +1,13 @@
+/**
+ * This method represents a room in the hotel
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Room
+public class Room implements Serializable
 {
     private int number;
     private int cost;
@@ -14,27 +20,52 @@ public class Room
         reservations = rLists;
     }
 
+    /**
+     * 
+     * @return the room number
+     */
     public int getRoomNumber()
     {
         return number;
     }
 
+    
+    /**
+     * 
+     * @return the cost of the room
+     */
     public int getCost() {return cost;}
 
+    /**
+     * 
+     * @return the reservations for a room
+     */
     public ReservationLists getReservations()
     {
         return reservations;
     }
 
+    /**
+     * 
+     * @param res the reservation to be added to a room
+     */
     public void addReservation(Reservation res)
     {
         reservations.add(res);
     }
 
+    /**
+     * 
+     * @param res the reservation to be cancelled
+     */
     public void cancelReservation(Reservation res) {
         reservations.cancelReservation(res);
     }
 
+    /**
+     * 
+     * @param lists the list of reservations of a room
+     */
     public void setReservation(ReservationLists lists) {
         reservations = lists;
     }
@@ -68,5 +99,14 @@ public class Room
             }
         }
         return true;
+    }
+    
+    /**
+     * 
+     * @return true if a room has reservations, false if no reservations made
+     */
+    public boolean isEmpty()
+    {
+       return !reservations.getReservations().hasNext();
     }
 }

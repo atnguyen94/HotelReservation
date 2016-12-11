@@ -1,3 +1,8 @@
+/**
+ * Describes the look and feel of the Sign Up GUI
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -14,12 +19,12 @@ import javax.swing.JTextField;
 @SuppressWarnings("deprecation")
 public class GuestSignUpView extends JFrame {
 
-    public GuestSignUpView(Model model)
+    public GuestSignUpView(final Model model)
     {
         JButton signup = new JButton("Sign Up");
         JPanel panel = new JPanel();
-        JTextField txuser = new JTextField(15);
-        JPasswordField pass = new JPasswordField(15);
+        final JTextField txuser = new JTextField(15);
+        final JPasswordField pass = new JPasswordField(15);
 
         setSize(300,200);
         setLocation(500,280);
@@ -64,11 +69,7 @@ public class GuestSignUpView extends JFrame {
                         }
                         else
                         {
-                            //System.out.println("XD");
                             model.addUser(u);
-                            //model.setCurrentUser(u);
-                            //View view = new View(model);
-                            //model.setView(view);
                             dispose();
                             break;
                         }
@@ -78,9 +79,6 @@ public class GuestSignUpView extends JFrame {
                 {
                     System.out.println("User added");
                     model.addUser(u);
-                    //model.setCurrentUser(u);
-                    //View view = new View(model);
-                    //model.setView(view);
                     dispose();
                 }
             }
@@ -93,7 +91,7 @@ public class GuestSignUpView extends JFrame {
         panel.add(name);
 
         getContentPane().add(panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 }

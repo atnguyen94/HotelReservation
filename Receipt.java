@@ -1,4 +1,4 @@
 public interface Receipt
 {
-    public double getTotalPrice();
+    public int getTotalPrice();
 }

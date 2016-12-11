@@ -1,3 +1,7 @@
+/**
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -14,12 +18,12 @@ import javax.swing.JTextField;
 
 public class GuestLoginView extends JFrame {
 
-    public GuestLoginView(Model model)
+    public GuestLoginView(final Model model)
     {
         JButton signup = new JButton("Login");
         JPanel panel = new JPanel();
-        JTextField txuser = new JTextField(15);
-        JPasswordField pass = new JPasswordField(15);
+        final JTextField txuser = new JTextField(15);
+        final JPasswordField pass = new JPasswordField(15);
 
         setSize(300,200);
         setLocation(500,280);
@@ -36,9 +40,6 @@ public class GuestLoginView extends JFrame {
         txuser.setBounds(70,30,150,20);
         pass.setBounds(70,70,150,20);
         signup.setBounds(110,100,80,20);
-
-        txuser.setText("tempuser");
-        pass.setText("temppass");
 
         //create a new user NEED TO DO THIS LOADING FROM FILE
         signup.addMouseListener(new MouseAdapter(){
@@ -72,6 +73,7 @@ public class GuestLoginView extends JFrame {
                         {
                             System.out.println("User found");
                             model.setCurrentUser(temp.get(i));
+                            model.getGuestReservations(temp.get(i));
                             dispose();
                             View view = new View(model, u);
                             model.setView(view);
@@ -100,7 +102,7 @@ public class GuestLoginView extends JFrame {
         panel.add(name);
 
         getContentPane().add(panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * This class describes the look and feel of the reservation creation GUI
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
@@ -20,17 +25,18 @@ public class ReservationView {
     private JTextField endText;
     private JLabel header;
     private JList<Room> roomJList = new JList<>();
+    private JFrame frame;
     private Calendar startCal = Calendar.getInstance();
     private Calendar endCal = Calendar.getInstance();
     private int total = 0;
 
-    public ReservationView(Model model, Guest user)  {
-        JFrame frame = new JFrame();
+    public ReservationView(final Model model, Guest user)  {
+        frame = new JFrame();
         JPanel panel = new JPanel();
         this.model = model;
         this.model.setCurrentUser(model.getCurrentUser());
 
-        Calendar cal = model.getCal();
+        final Calendar cal = model.getCal();
         SimpleDateFormat time = new SimpleDateFormat("hh:mmaa");
         Calendar tempEnd = new GregorianCalendar();
         tempEnd.setTime(cal.getTime());
@@ -221,6 +227,8 @@ public class ReservationView {
         String checkIn = beginText.getText();
         String checkOut = endText.getText();
 
+        if(!checkConstraints())return;
+
         int cost = 0;
 
         if (roomType.getText().equals("Economy")) {
@@ -244,6 +252,9 @@ public class ReservationView {
         }
     }
 
+    /**
+     * This method creates a reservation from GUI input
+     */
     private void makeReservation() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String checkIn = beginText.getText();
@@ -259,11 +270,52 @@ public class ReservationView {
             Room room = roomJList.getSelectedValue();
             Reservation r = new Reservation(startCal.getTime(), endCal.getTime(), eventText.getText(), room);
             total += room.getCost();
-            model.getCurrentUser().addRoom(room);
             room.addReservation(r);
+            model.getCurrentUser().addRoom(room);
 
         } catch (ParseException p) {
             p.printStackTrace();
         }
+    }
+
+    private boolean checkConstraints() {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        String checkIn = beginText.getText();
+        String checkOut = endText.getText();
+        Calendar current = Calendar.getInstance();
+        boolean b = true;
+
+        try {
+            Date startDate = df.parse(checkIn);
+            Date endDate = df.parse(checkOut);
+
+            startCal.setTime(startDate);
+            endCal.setTime(endDate);
+
+            if (startCal.get(Calendar.YEAR) < current.get(Calendar.YEAR) ||
+                    ((startCal.get(Calendar.MONTH) < current.get(Calendar.MONTH)) && startCal.get(Calendar.YEAR) <= current.get(Calendar.YEAR)) ||
+                    ((startCal.get(Calendar.DATE) < current.get(Calendar.DATE)) && startCal.get(Calendar.YEAR) <= current.get(Calendar.YEAR))){
+                JOptionPane.showMessageDialog(frame,
+                        "ERROR: Start date earlier than today.", "Error",
+                        JOptionPane.ERROR_MESSAGE); b = false;
+            } else if (endCal.get(Calendar.YEAR) < current.get(Calendar.YEAR) ||
+                    ((endCal.get(Calendar.MONTH) < current.get(Calendar.MONTH)) && endCal.get(Calendar.YEAR) <= current.get(Calendar.YEAR)) ||
+                    ((endCal.get(Calendar.DATE) < current.get(Calendar.DATE)) && endCal.get(Calendar.YEAR) <= current.get(Calendar.YEAR))){
+                JOptionPane.showMessageDialog(frame,
+                        "ERROR: End date earlier than today.", "Error",
+                        JOptionPane.ERROR_MESSAGE); b = false;
+            }
+
+            startCal.add(Calendar.DATE, 60);
+            if(startCal.before(endCal)){
+                JOptionPane.showMessageDialog(frame, "ERROR: Length of stay must be 60 nights or less","Error",
+                        JOptionPane.ERROR_MESSAGE); b = false;
+            }
+            startCal.add(Calendar.DATE, -60);
+
+        } catch (ParseException p) {
+            p.printStackTrace();
+        }
+        return b;
     }
 }

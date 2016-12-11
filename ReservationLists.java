@@ -1,11 +1,19 @@
+/**
+ * This method contains the list of reservations for each room
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ */
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.io.Serializable;
 
 
-public class ReservationLists
+
+public class ReservationLists implements Serializable
 {
     private ArrayList<Reservation> reservationArrayList;
 
@@ -30,16 +38,56 @@ public class ReservationLists
         }
     }
 
+    /**
+     * 
+     * @return and iterator to traverse the reservation list
+     */
     public Iterator<Reservation> getReservations()
     {
         return reservationArrayList.iterator();
     }
 
+    /**
+     * 
+     * @return an array list of all reservations
+     */
+    public ArrayList<Reservation> getRes()
+    {
+       return reservationArrayList;
+    }
+    
+    /**
+     * Removes a reservation from the reservation list
+     * @param res the reservation to be cancelled
+     */
     public void cancelReservation(Reservation res)
     {
         reservationArrayList.remove(res);
     }
+    
+    /**
+     * Returns the reservations of a specific user
+     * @param g the user 
+     * @return the user's reservations
+     */
+    public ArrayList<Reservation> getUserRes(Guest g)
+    {
+       ArrayList<Reservation> r = new ArrayList<>();
+       
+       for(Reservation res: reservationArrayList)
+       {
+          if(res.getUserID().equals(g.getUserID()))
+             r.add(res);
+       }
+       
+       return r;
+    }
 
+    /**
+     * Returns an iterator to traverse a user's reservations
+     * @param userID the ID of a user
+     * @return an iterator
+     */
     public Iterator<Reservation> getUserReservations(String userID)
     {
         ArrayList<Reservation> userReservationList = new ArrayList<>();
@@ -53,6 +101,11 @@ public class ReservationLists
         return userReservationList.iterator();
     }
 
+    /**
+     * Returns an iterator to traverse reservations by room
+     * @param roomNum the room number
+     * @return an iterator
+     */
     public Iterator<Reservation> getIteratorByRoom(int roomNum)
     {
         ArrayList<Reservation> roomReservationList = new ArrayList<>();
@@ -66,6 +119,11 @@ public class ReservationLists
         return roomReservationList.iterator();
     }
 
+    /**
+     * Returns an iterator to traverse reservations by date
+     * @param date the specific date
+     * @return an iterator
+     */
     public Iterator<Reservation> getDateReservations(Date date)
     {
         ArrayList<Reservation> dateReservationList = new ArrayList<>();

@@ -1,3 +1,9 @@
+/**
+ * Using the strategy design pattern, this class managers the receipts of users
+ *  * GROUP NAME: Warriors
+ * @author Milan Mishra, Tuan Nguyen, Nicholas Lacroix
+ *
+ */
 public class ReceiptContext
 {
     private Receipt receipt;
