@@ -152,6 +152,9 @@ public class View {
       frame.setVisible(true);
    }
 
+   /**
+    * Repaint months
+    */
    public void repaint() {
       monthPanel.removeAll();
       drawMonth(monthPanel);
@@ -159,6 +162,10 @@ public class View {
       monthPanel.repaint();
    }
 
+   /**
+    * Draw months on calendar for user to specify their check-in and check-out dates
+    * @param monthPanel
+    */
    private void drawMonth(JPanel monthPanel) {
       monthLabel.setText(new SimpleDateFormat("MMMM yyyy").format(cal.getTime()));
       monthLabel.setForeground(Color.BLUE);

@@ -222,6 +222,9 @@ public class ReservationView {
         frame.setVisible(true);
     }
 
+    /**
+     * Show available rooms on the JScrollPane
+     */
     private void paintRooms() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String checkIn = beginText.getText();
@@ -278,6 +281,10 @@ public class ReservationView {
         }
     }
 
+    /**
+     * Ensure that reservation dates are not before current date, and length of stay is less than or equal to 60 nights
+     * @return false if there is an error
+     */
     private boolean checkConstraints() {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String checkIn = beginText.getText();

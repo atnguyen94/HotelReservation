@@ -168,6 +168,9 @@ public class ManagerView {
       frame.setVisible(true);
    }
 
+   /**
+    * Repaint calendar
+    */
    public void repaint() {
       monthPanel.removeAll();
       drawMonth(monthPanel);
@@ -175,6 +178,10 @@ public class ManagerView {
       monthPanel.repaint();
    }
 
+   /**
+    * Draws month on screen
+    * @param monthPanel JPanel to draw on
+    */
    private void drawMonth(JPanel monthPanel) {
       monthLabel.setText(new SimpleDateFormat("MMMM yyyy").format(cal.getTime()));
       monthLabel.setForeground(Color.BLUE);
@@ -219,6 +226,9 @@ public class ManagerView {
       }
    }
 
+   /**
+    * Shows all reservations for the given date
+    */
    private void updateView() {
       Calendar current = Calendar.getInstance();
       current.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));

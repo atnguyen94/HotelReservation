@@ -26,7 +26,7 @@ public class ReceiptView
       frame.setSize(new Dimension(400,600));
 
 
-      /*
+      /**
        * Describes the look and feel of the receipt
        */
       final JTextArea costs = new JTextArea();

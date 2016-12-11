@@ -25,6 +25,9 @@ public class Model implements Serializable
    private View view;
    private ManagerView managerView;
 
+   /**
+    * Constructor of model, which creates 10 luxury (1-10) and 10 economy rooms (11-20)
+    */
    public Model()
    {
       hotelRoomLayout = new ArrayList<>();
@@ -45,7 +48,6 @@ public class Model implements Serializable
       cal.set(Calendar.DAY_OF_MONTH, day);
       view.repaint();
    }
-
    
    public boolean hasNoReservations(int index)
    {
